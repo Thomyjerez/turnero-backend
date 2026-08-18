@@ -16,6 +16,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 class TurnoCreate(BaseModel):
     name: str
     phone: str
@@ -31,7 +32,7 @@ async def create_turno(turno: TurnoCreate):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         raise HTTPException(status_code=500, detail="Faltan credenciales de Telegram")
 
-   mensaje_telegram = (
+    mensaje_telegram = (
         f"NUEVO TURNO SOLICITADO\n\n"
         f"Paciente: {turno.name}\n"
         f"Teléfono: {turno.phone}\n"
@@ -52,4 +53,6 @@ async def create_turno(turno: TurnoCreate):
         response.raise_for_status()
         return {"message": "Turno solicitado con éxito"}
     except requests.exceptions.RequestException as e:
+        error_msg = e.response.text if e.response is not None else str(e)
+        print(f"ERROR DE TELEGRAM: {error_msg}")
         raise HTTPException(status_code=500, detail="Error al enviar el mensaje a Telegram")
