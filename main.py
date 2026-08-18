@@ -25,8 +25,8 @@ class TurnoCreate(BaseModel):
 
 @app.post("/api/turnos")
 async def create_turno(turno: TurnoCreate):
-    TELEGRAM_BOT_TOKEN = os.getenv("8711309658:AAHfVnC3GpgJrUvAsJXBcJanHAeI2wBquSA")
-    TELEGRAM_CHAT_ID = os.getenv("1604249964")
+    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+    TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         raise HTTPException(status_code=500, detail="Faltan credenciales de Telegram")
