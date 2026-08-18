@@ -31,21 +31,20 @@ async def create_turno(turno: TurnoCreate):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         raise HTTPException(status_code=500, detail="Faltan credenciales de Telegram")
 
-    mensaje_telegram = (
-        f"*NUEVO TURNO SOLICITADO*\n\n"
-        f"*Paciente:* {turno.name}\n"
-        f"*Teléfono:* {turno.phone}\n"
-        f"*Email:* {turno.email}\n"
-        f"*Especialidad:* {turno.specialty}\n"
-        f"*Fecha preferida:* {turno.preferred_date}\n\n"
-        f"Por favor, contactar al paciente para confirmar el horario exacto."
+   mensaje_telegram = (
+        f"NUEVO TURNO SOLICITADO\n\n"
+        f"Paciente: {turno.name}\n"
+        f"Teléfono: {turno.phone}\n"
+        f"Email: {turno.email}\n"
+        f"Especialidad: {turno.specialty}\n"
+        f"Fecha preferida: {turno.preferred_date}\n\n"
+        f"Por favor, contactar al paciente."
     )
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
-        "text": mensaje_telegram,
-        "parse_mode": "Markdown"
+        "text": mensaje_telegram
     }
 
     try:
